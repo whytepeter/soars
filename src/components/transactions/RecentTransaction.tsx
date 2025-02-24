@@ -11,6 +11,7 @@ import { useQuery } from "@/hooks/useQuery";
 import TransactionCard from "./TransactionCard";
 import { ROUTES } from "@/router/type";
 import { Link } from "react-router-dom";
+import { Button } from "../base/Button";
 
 interface Props {
   className?: string;
@@ -33,8 +34,13 @@ export default function RecentTransaction({ className }: Props) {
     <div className={cn("space-y-4", className)}>
       <div className="flex items-center justify-between">
         <Heading>Recent Transaction</Heading>
-        <Link className="text-dark-300 font-medium" to={ROUTES.Transaction}>
-          See all
+        <Link to={ROUTES.Transaction}>
+          <Button
+            className="text-dark-300 font-semibold text-base"
+            variant="link"
+          >
+            See all
+          </Button>
         </Link>
       </div>
       <Card className="overflow-auto min-h-[250px] max-h-[400px] md:max-h-[250px] no-scrollbar">

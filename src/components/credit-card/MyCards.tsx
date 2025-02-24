@@ -15,6 +15,7 @@ import { CreditCards } from "@/types";
 import { getUserCards } from "@/lib/api/cards";
 import { setUserState } from "@/store/slices/userSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks";
+import { Button } from "../base/Button";
 
 interface Props {
   className?: string;
@@ -35,8 +36,13 @@ export default function ListCreditCards({ className }: Props) {
     <div className={cn("space-y-4", className)}>
       <div className="flex items-center justify-between">
         <Heading>My Cards</Heading>
-        <Link className="text-dark-300 font-medium" to={ROUTES.CreditCard}>
-          See all
+        <Link to={ROUTES.CreditCard}>
+          <Button
+            className="text-dark-300 font-semibold text-base"
+            variant="link"
+          >
+            See all
+          </Button>
         </Link>
       </div>
 
