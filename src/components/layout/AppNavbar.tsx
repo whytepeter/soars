@@ -69,7 +69,10 @@ export default function AppNavbar({ className }: Props) {
             </Avatar>
           </div>
 
-          <UserProfile className="w-12 h-12" />
+          <UserProfile
+            onClick={() => navigate(ROUTES.Accounts)}
+            className="w-12 h-12"
+          />
         </div>
       </div>
 
