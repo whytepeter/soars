@@ -56,23 +56,25 @@ export default function Security() {
   }
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full mx-auto max-w-lg flex-1 flex flex-col gap-4 text-dark"
-      >
-        <FieldInput form={form} fields={fields} loading={loading} />
+    <div className="md:px-6 py-6 w-full ">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full mx-auto max-w-lg flex-1 flex flex-col gap-4 text-dark"
+        >
+          <FieldInput form={form} fields={fields} loading={loading} />
 
-        <div className="flex items-center justify-end">
-          <Button
-            loading={loading}
-            className="w-full md:w-auto px-16"
-            type="submit"
-          >
-            Save
-          </Button>
-        </div>
-      </form>
-    </Form>
+          <div className="flex items-center justify-end">
+            <Button
+              loading={loading}
+              className="w-full md:w-auto px-16"
+              type="submit"
+            >
+              Save
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </div>
   );
 }
