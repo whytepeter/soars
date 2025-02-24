@@ -29,7 +29,7 @@ export default function QuickTransfer({ className }: Props) {
               className="h-[48px] bg-background rounded-full md:pr-24"
             />
 
-            <Button className="absolute top-1/2 -translate-y-1/2 right-0 hover:bg-dark rounded-full">
+            <Button className="absolute top-1/2 -translate-y-1/2 right-0 rounded-full">
               Send
               <img className="w-5" src={SendIcon} />
             </Button>
