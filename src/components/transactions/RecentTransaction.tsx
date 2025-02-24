@@ -9,6 +9,8 @@ import { Transaction } from "@/types";
 import { getTransactions } from "@/lib/api/transaction";
 import { useQuery } from "@/hooks/useQuery";
 import TransactionCard from "./TransactionCard";
+import { ROUTES } from "@/router/type";
+import { Link } from "react-router-dom";
 
 interface Props {
   className?: string;
@@ -29,7 +31,12 @@ export default function RecentTransaction({ className }: Props) {
 
   return (
     <div className={cn("space-y-4", className)}>
-      <Heading>Recent Transaction</Heading>
+      <div className="flex items-center justify-between">
+        <Heading>Recent Transaction</Heading>
+        <Link className="text-dark-300 font-medium" to={ROUTES.Transaction}>
+          See all
+        </Link>
+      </div>
       <Card className="overflow-auto min-h-[250px] max-h-[400px] md:max-h-[250px] no-scrollbar">
         <Show>
           <Show.When isTrue={loading && !transactions?.length}>

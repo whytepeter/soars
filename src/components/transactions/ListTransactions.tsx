@@ -40,7 +40,7 @@ export default function ListTransactions() {
 
   const tableHeader: TableHeadersProps[] = [
     {
-      title: "Ref",
+      title: "Ref ID",
       field: "reference",
     },
     {

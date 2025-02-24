@@ -44,11 +44,6 @@ export default function AppNavbar({ className }: Props) {
     className
   );
 
-  const handleSearch = useCallback((value: string) => {
-    //handle search logic here
-    console.log(value);
-  }, []);
-
   return (
     <nav className={navbarClass}>
       <div className="flex gap-4 items-center justify-between">
