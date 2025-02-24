@@ -1,11 +1,11 @@
 # Soar Task
 
-[Hosted here](https://soar.onrender.com/)
+[Hosted here](https://soars.onrender.com)
 
 ## How to run locally
 
 ```bash
-git clone https://github.com/whytepeter/Soar
+git clone https://github.com/whytepeter/soars
 
 cd soar
 
