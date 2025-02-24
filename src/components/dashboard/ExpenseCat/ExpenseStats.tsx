@@ -5,8 +5,7 @@ import { useQuery } from "@/hooks/useQuery";
 import { ExpenseStatistic } from "@/types";
 import { getExpenseStats } from "@/lib/api/transaction";
 
-import Chart from "react-apexcharts";
-import { ApexOptions } from "apexcharts";
+import ReactECharts from "echarts-for-react";
 import ExpenseChartLoader from "./ExpenseChartLoader";
 import { useMemo } from "react";
 import Show from "@/components/base/Show";
@@ -18,73 +17,65 @@ interface Props {
 export default function ExpenseStats({ className = "" }: Props) {
   const { data, loading } = useQuery<ExpenseStatistic[]>(getExpenseStats, []);
 
-  const chartOptions: ApexOptions = useMemo(
-    () => ({
-      chart: {
-        type: "polarArea",
-        height: "300",
-      },
-      labels: data?.map((item) => item.category) || [],
-      colors: ["#343C6A", "#396AFF", "#FC7900", "#232323"],
-      stroke: {
-        colors: ["#fff"],
-      },
-      yaxis: {
-        show: false,
-      },
-      fill: {
-        opacity: 1,
+  const chartOptions = useMemo(() => {
+    const chartData =
+      data?.map((item) => ({
+        value: item.percentage,
+        name: item.category,
+        selected: true,
+      })) || [];
+
+    return {
+      color: ["#343C6A", "#FC7900", "#396AFF", "#000000"],
+      tooltip: {
+        trigger: "item",
+        formatter: ["{b}", "{d}%"].join("\n"),
       },
       legend: {
         show: false,
       },
-      dataLabels: {
-        enabled: true,
-        formatter: (val, opts) => {
-          const category = data?.[opts.seriesIndex]?.category || "";
-          return `${category}: ${val}%`;
-        },
-        style: {
-          fontSize: "12px",
-        },
-
-        dropShadow: {
-          enabled: false,
-        },
-      },
-
-      plotOptions: {
-        polarArea: {
-          rings: {
-            strokeColor: "transparent",
-          },
-          spokes: {
-            connectorColors: "transparent",
-          },
-        },
-      },
-
-      responsive: [
+      series: [
         {
-          breakpoint: 768,
-          options: {
-            chart: {
-              width: "100%",
+          name: "Expense",
+          type: "pie",
+          radius: [0, 130],
+          selectedMode: "multiple",
+          selectedOffset: 7,
+
+          data: chartData,
+
+          label: {
+            show: true,
+            position: "inside",
+
+            formatter: ["{percent|{d}%}", "{name|{b}}"].join("\n"),
+            rich: {
+              percent: {
+                fontSize: 16,
+                fontWeight: "500",
+              },
+              name: {
+                fontSize: 12,
+                fontWeight: "400",
+                padding: [2, 0, 0, 4],
+              },
             },
-            legend: {
-              position: "bottom",
+            color: "#fff",
+          },
+
+          labelLine: {
+            show: false,
+          },
+
+          emphasis: {
+            itemStyle: {
+              shadowColor: "rgba(0, 0, 0, 0.5)",
             },
           },
         },
       ],
-    }),
-    [data]
-  );
-
-  const chartSeries = useMemo(
-    () => data?.map((item) => item.percentage) || [],
-    [data]
-  );
+    };
+  }, [data]);
 
   return (
     <div className={cn("space-y-4", className)}>
@@ -96,12 +87,7 @@ export default function ExpenseStats({ className = "" }: Props) {
           </Show.When>
           <Show.When isTrue={!!data?.length}>
             <div className="mx-auto w-fit">
-              <Chart
-                options={chartOptions}
-                series={chartSeries}
-                type="polarArea"
-                width="350"
-              />
+              <ReactECharts option={chartOptions} className="w-[350px]" />
             </div>
           </Show.When>
           <Show.Else>

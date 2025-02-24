@@ -8,9 +8,9 @@ import { BalanceHistoryType } from "@/types";
 import Show from "@/components/base/Show";
 import { useMemo } from "react";
 
-import Chart from "react-apexcharts";
-import { ApexOptions } from "apexcharts";
 import BalanceLoader from "./BalanceLoader";
+import ReactECharts from "echarts-for-react";
+import * as echarts from "echarts";
 
 interface Props {
   className?: string;
@@ -22,67 +22,66 @@ export default function BalanceHistory({ className }: Props) {
     []
   );
 
-  const chartOptions: ApexOptions = useMemo(
+  const chartOptions = useMemo(
     () => ({
-      chart: {
-        type: "area",
-        height: 250,
-        toolbar: {
-          show: false,
-        },
-        zoom: {
-          enabled: false,
-        },
-      },
-      colors: ["#396AFF"],
-      xaxis: {
-        categories: data?.map((el) => el.month) || [],
-        labels: {
-          style: {
-            colors: "#718EBF",
-            fontSize: "12px",
-          },
-        },
-      },
-      yaxis: {
-        labels: {
-          formatter(val) {
-            return val?.toLocaleString() ?? "";
-          },
-          style: {
-            colors: "#718EBF",
-            fontSize: "12px",
-          },
-        },
-      },
-      stroke: {
-        curve: "smooth",
-        width: 2,
-      },
-      dataLabels: {
-        enabled: false,
-      },
-
       tooltip: {
-        y: {
-          formatter: (val) => `$${val}`,
+        trigger: "axis",
+        borderRadius: 10,
+        textStyle: {
+          color: "#000",
         },
       },
-
       legend: {
         show: false,
       },
-    }),
-    [data]
-  );
+      xAxis: {
+        type: "category",
+        data: data?.map((el) => el.month) || [],
 
-  const chartSeries = useMemo(
-    () => [
-      {
-        name: "Balance",
-        data: data?.map((el) => el.balance) || [],
+        axisLabel: {
+          color: "#718EBF",
+        },
       },
-    ],
+
+      yAxis: {
+        type: "value",
+        axisLabel: {
+          color: "#718EBF",
+        },
+      },
+
+      grid: {
+        left: "4%",
+        right: "0%",
+        bottom: "10%",
+        top: "10%",
+        containLabel: true,
+      },
+      series: [
+        {
+          name: "Balance History",
+          type: "line",
+          data: data?.map((el) => el.balance) || [],
+          smooth: true,
+          lineStyle: {
+            width: 3,
+          },
+
+          itemStyle: {
+            color: "#1814F3",
+          },
+
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+              { offset: 0, color: "rgba(45, 96, 255, 0.25)" },
+              { offset: 1, color: "rgba(45, 96, 255, 0)" },
+            ]),
+          },
+
+          symbol: "none",
+        },
+      ],
+    }),
     [data]
   );
 
@@ -95,12 +94,7 @@ export default function BalanceHistory({ className }: Props) {
             <BalanceLoader />
           </Show.When>
           <Show.When isTrue={!loading}>
-            <Chart
-              options={chartOptions}
-              series={chartSeries}
-              type="area"
-              height="250"
-            />
+            <ReactECharts option={chartOptions} className="h-[250px]" />
           </Show.When>
         </Show>
       </Card>

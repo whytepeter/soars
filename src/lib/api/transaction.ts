@@ -110,8 +110,8 @@ export const getExpenseStats = async (): Promise<{
 }> => {
   const data = [
     { category: "Entertainment", percentage: 30 },
-    { category: "Investment", percentage: 20 },
     { category: "Bill Expense", percentage: 15 },
+    { category: "Investment", percentage: 20 },
     { category: "Other", percentage: 35 },
   ];
 
