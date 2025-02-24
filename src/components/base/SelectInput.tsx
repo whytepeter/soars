@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 
 export type SelectInputType = React.SelectHTMLAttributes<HTMLSelectElement> & {
   options: string[];
-  value: string;
+  value?: string;
   onChange?: (e: { target: { value: string } }) => void;
   error?: string;
 };

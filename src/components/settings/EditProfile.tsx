@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/base/Button";
-import { Input } from "@/components/base/Input";
-import SelectInput from "@/components/base/SelectInput";
 import UserProfile from "./UserProfle";
-import DateInput from "@/components/base/DateInput";
-import Show from "@/components/base/Show";
 
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
@@ -18,13 +14,16 @@ import { COUNTRIES } from "@/lib/constant";
 import { updateUser } from "@/lib/api/user";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { editUser } from "@/store/slices/userSlice";
+import FieldInput, { FieldItems } from "../base/FieldInput";
+
+type FormType = z.infer<typeof EditProfileSchema>;
 
 export default function EditProfile() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.userDetails);
   const [loading, setLoading] = useState(false);
 
-  const form = useForm<z.infer<typeof EditProfileSchema>>({
+  const form = useForm<FormType>({
     resolver: zodResolver(EditProfileSchema),
     defaultValues: {
       full_name: user?.full_name || "",
@@ -40,29 +39,49 @@ export default function EditProfile() {
     },
   });
 
-  const fields: {
-    name: keyof z.infer<typeof EditProfileSchema>; // Restrict names to schema keys
-    label: string;
-    type: string;
-    options?: string[];
-  }[] = [
-    { name: "full_name", label: "Your Name", type: "text" },
-    { name: "user_name", label: "User Name", type: "text" },
-    { name: "email", label: "Email", type: "email" },
-    { name: "password", label: "Password", type: "password" },
+  const fields: FieldItems[] = [
+    { name: "full_name", label: "Your Name", fieldType: "input" },
+    { name: "user_name", label: "User Name", fieldType: "input" },
+    {
+      name: "email",
+      label: "Email",
+      fieldType: "input",
+      props: { type: "email", inputMode: "email" },
+    },
+    {
+      name: "password",
+      label: "Password",
+      fieldType: "input",
+      props: { type: "password" },
+    },
     {
       name: "dob",
       label: "Date of Birth",
-      type: "date",
+      fieldType: "date",
+      props: { type: "date" },
     },
-    { name: "present_address", label: "Present Address", type: "text" },
-    { name: "permanent_address", label: "Permanent Address", type: "text" },
-    { name: "city", label: "City", type: "text" },
-    { name: "postal_code", label: "Postal Code", type: "numeric" },
-    { name: "country", label: "Country", type: "select", options: COUNTRIES },
+    { name: "present_address", label: "Present Address", fieldType: "input" },
+    {
+      name: "permanent_address",
+      label: "Permanent Address",
+      fieldType: "input",
+    },
+    { name: "city", label: "City", fieldType: "input" },
+    {
+      name: "postal_code",
+      label: "Postal Code",
+      fieldType: "input",
+      props: { type: "numeric" },
+    },
+    {
+      name: "country",
+      label: "Country",
+      fieldType: "select",
+      props: { options: COUNTRIES },
+    },
   ];
 
-  async function onSubmit(values: z.infer<typeof EditProfileSchema>) {
+  async function onSubmit(values: FormType) {
     try {
       setLoading(true);
       const res = await updateUser(values);
@@ -107,57 +126,8 @@ export default function EditProfile() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-6 text-dark"
         >
-          {fields.map(({ name, label, type, options }) => (
-            <FormField
-              key={name}
-              control={form.control}
-              name={name}
-              render={({ field, fieldState: { error } }) => (
-                <FormItem>
-                  <FormControl>
-                    <div className="space-y-2 col-span-1">
-                      <label className="text-sm" htmlFor={name}>
-                        {label}
-                      </label>
+          <FieldInput form={form} fields={fields} loading={loading} />
 
-                      <Show>
-                        <Show.When isTrue={type === "date"}>
-                          <DateInput
-                            disabled={loading}
-                            id={name}
-                            type={type}
-                            error={error ? String(error.message) : ""}
-                            {...field}
-                          />
-                        </Show.When>
-                        <Show.When isTrue={type === "select"}>
-                          <SelectInput
-                            options={options ?? []}
-                            disabled={loading}
-                            id={name}
-                            error={error ? String(error.message) : ""}
-                            {...field}
-                          />
-                        </Show.When>
-                        <Show.Else>
-                          <Input
-                            disabled={loading}
-                            id={name}
-                            type={type}
-                            inputMode={
-                              type === "numeric" ? "numeric" : undefined
-                            }
-                            error={error ? String(error.message) : ""}
-                            {...field}
-                          />
-                        </Show.Else>
-                      </Show>
-                    </div>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          ))}
           <div className="col-span-1 md:col-span-2 flex items-center justify-end">
             <Button
               loading={loading}

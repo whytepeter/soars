@@ -31,3 +31,23 @@ export const EditProfileSchema = z.object({
     .regex(/^\d+$/, "Postal Code must be numeric"),
   country: z.string().describe("Country").min(1, "Country is required"),
 });
+
+export const SecuritySchema = z
+  .object({
+    old_password: z
+      .string()
+      .describe("Old Password")
+      .min(1, "Old Password is required"),
+    password: z
+      .string()
+      .describe("Password")
+      .min(6, "Password must be at least 6 characters"),
+    confirm_password: z
+      .string()
+      .describe("Confirm Password")
+      .min(6, "Password must be at least 6 characters"),
+  })
+  .refine((data) => data.password === data.confirm_password, {
+    message: "Passwords must match.",
+    path: ["confirm_password"],
+  });

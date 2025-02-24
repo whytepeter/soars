@@ -1,1 +1,0 @@
-import{r as s}from"./index-Bu-kn7ni.js";function t(e){let r=null,o=null;return s.Children.forEach(e.children,n=>{s.isValidElement(n)&&(n.props.isTrue===void 0?o=n:!r&&n.props.isTrue===!0&&(r=n))}),r||o}t.When=({isTrue:e,children:r})=>e?r:null;t.Else=({children:e})=>e;export{t as S};

@@ -12,7 +12,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Input, InputType } from "./Input";
 import { formatDate } from "@/lib/utils";
 
-type DateInputType = InputType & {
+export type DateInputType = InputType & {
   value?: string;
   onChange?: (e: { target: { value: string } }) => void;
 };
