@@ -1,0 +1,1 @@
+import{U as t}from"./db-DwcLxr1r.js";const u=async e=>new Promise((s,r)=>{setTimeout(()=>{s({success:!0,data:{...e}})},1e3)}),c=async()=>new Promise((e,s)=>{setTimeout(()=>{t?e({success:!0,data:{...t}}):s({success:!1,message:"User not found."})},1e3)});export{c as g,u};

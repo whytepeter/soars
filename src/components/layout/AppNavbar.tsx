@@ -3,7 +3,7 @@ import { toggleSidebar } from "@/store/slices/configSlice";
 import { cn } from "@/lib/utils";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES } from "@/router/type";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 
 import Hamburger from "@/assets/icon/hamburger.svg";
 import Setting from "@/assets/icon/settings-2.svg";
