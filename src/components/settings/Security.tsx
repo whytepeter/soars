@@ -56,11 +56,11 @@ export default function Security() {
   }
 
   return (
-    <div className="md:px-6 py-6 w-full ">
+    <div className="md:px-6 py-6  w-full mx-auto max-w-lg">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full mx-auto max-w-lg flex-1 flex flex-col gap-4 text-dark"
+          className=" flex-1 flex flex-col gap-4 text-dark"
         >
           <FieldInput form={form} fields={fields} loading={loading} />
 
