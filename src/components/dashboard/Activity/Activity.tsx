@@ -37,7 +37,7 @@ export default function Activity({ className }: Props) {
         },
       },
       grid: {
-        left: "5%",
+        left: "4%",
         right: "5%",
         top: 50,
         bottom: "5%",

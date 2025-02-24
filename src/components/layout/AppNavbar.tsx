@@ -40,13 +40,13 @@ export default function AppNavbar({ className }: Props) {
   }, [location.pathname]);
 
   const navbarClass = cn(
-    "sticky bg-white md:border-b border-outline left-0 top-0 w-full z-30 bg-white  p-4 md:px-6 flex flex-col gap-4",
+    "sticky !bg-white/80 backdrop-blur-md md:border-b border-outline left-0 top-0 w-full z-30 bg-white  p-4 md:px-6 flex flex-col gap-4",
     className
   );
 
   return (
     <nav className={navbarClass}>
-      <div className="flex gap-4 items-center justify-between">
+      <div className="flex gap-4  items-center justify-between">
         <Button
           size="icon"
           variant="ghost"
