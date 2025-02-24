@@ -46,11 +46,17 @@ export default function Activity({ className }: Props) {
       xAxis: {
         type: "category",
         data: data?.map((el) => el.day) || [],
+        axisLabel: {
+          color: "#718EBF",
+        },
       },
       yAxis: {
         type: "value",
         splitLine: {
           show: true,
+        },
+        axisLabel: {
+          color: "#718EBF",
         },
       },
       series: [
