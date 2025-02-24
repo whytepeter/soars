@@ -11,6 +11,7 @@ import { setTransactionState } from "@/store/slices/transactionSlice";
 import Avatar from "../base/Avatar";
 import { cn, formatCurrency, formatDate } from "@/lib/utils";
 import { TRANSACTION_METHODS } from "./TransactionCard";
+import Pagination, { PaginationType } from "../base/Pagination";
 
 export default function ListTransactions() {
   const dispatch = useAppDispatch();
@@ -22,7 +23,17 @@ export default function ListTransactions() {
   const { loading } = useQuery<Transaction[]>(getTransactions, [], {
     onSuccess: (data) => {
       dispatch(setTransactionState({ transactions: data }));
+      setPagination((prev) => ({
+        ...prev,
+        totalPage: data?.length / pagination.pageSize,
+      }));
     },
+  });
+
+  const [pagination, setPagination] = useState<PaginationType>({
+    currentPage: 1,
+    totalPage: 0,
+    pageSize: 10,
   });
 
   const [searchInput, setSearchInput] = useState("");
@@ -90,12 +101,12 @@ export default function ListTransactions() {
   ];
 
   return (
-    <div>
+    <div className="space-y-4">
       <Table
         dataKey="id"
         loading={loading}
         headerTemplate={
-          <div className="bg-white py-2 px-4 flex items-center justify-between gap-4">
+          <div className="bg-white py-2 px-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <Heading className="text-dark-300">All Transactions</Heading>
             <div className="w-full max-w-sm ">
               <Search
@@ -110,6 +121,8 @@ export default function ListTransactions() {
         headers={tableHeader}
         data={visibleTransaction}
       />
+
+      <Pagination pagination={pagination} />
     </div>
   );
 }
