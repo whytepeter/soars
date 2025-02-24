@@ -64,7 +64,8 @@ export default function Activity({ className }: Props) {
           name: "Deposit",
           type: "bar",
           data: data?.map((el) => el.deposit) || [],
-          barWidth: 20,
+          barWidth: 15,
+          barGap: "50%",
 
           itemStyle: {
             color: "#396AFF",
@@ -75,7 +76,7 @@ export default function Activity({ className }: Props) {
           name: "Withdraw",
           type: "bar",
           data: data?.map((el) => el.withdrawal) || [],
-          barWidth: 20,
+          barWidth: 15,
 
           itemStyle: {
             color: "#232323",
