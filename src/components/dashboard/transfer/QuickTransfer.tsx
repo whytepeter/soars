@@ -7,12 +7,15 @@ import { Button } from "@/components/base/Button";
 import SendIcon from "@/assets/icon/send.svg";
 
 import ListBeneficiary from "./ListBeneficiary";
+import { useState } from "react";
 
 interface Props {
   className?: string;
 }
 
 export default function QuickTransfer({ className }: Props) {
+  const [amount, setAmount] = useState("");
+
   return (
     <div className={cn("space-y-4", className)}>
       <Heading>Quick Transfer</Heading>
@@ -23,7 +26,9 @@ export default function QuickTransfer({ className }: Props) {
           <span className="font-light whitespace-nowrap">Write Amount</span>
           <div className="h-[48px] relative flex-1 ">
             <Input
-              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              currency
               inputMode="numeric"
               name="amount"
               className="h-[48px] bg-background rounded-full md:pr-24"

@@ -40,7 +40,7 @@ export default function AppNavbar({ className }: Props) {
   }, [location.pathname]);
 
   const navbarClass = cn(
-    "sticky !bg-white/80 backdrop-blur-md md:border-b border-outline left-0 top-0 w-full z-30 bg-white  p-4 md:px-6 flex flex-col gap-4",
+    "sticky !bg-white/80 backdrop-blur-md md:border-b border-outline left-0 top-0 w-full z-20 bg-white  p-4 md:px-6 flex flex-col gap-4",
     className
   );
 
@@ -70,7 +70,7 @@ export default function AppNavbar({ className }: Props) {
           </div>
 
           <UserProfile
-            onClick={() => navigate(ROUTES.Accounts)}
+            // onClick={() => navigate(ROUTES.Accounts)}
             className="w-12 h-12"
           />
         </div>

@@ -8,6 +8,8 @@ export interface InputType extends React.InputHTMLAttributes<HTMLInputElement> {
   prepend?: React.ReactNode;
   prependClick?: () => void;
   appendClick?: () => void;
+  currency?: boolean;
+  currencySign?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputType>(
@@ -22,6 +24,11 @@ const Input = React.forwardRef<HTMLInputElement, InputType>(
       appendClick,
       onFocus,
       onBlur,
+      currency = false,
+      onChange,
+      value,
+      name,
+      currencySign = "$",
       ...props
     },
     ref
@@ -42,6 +49,36 @@ const Input = React.forwardRef<HTMLInputElement, InputType>(
       props?.disabled && "cursor-not-allowed opacity-50",
       "flex-1 appearance-none placeholder:text-dark-200 text-dark-200  h-full focus:outline-none block appearance-none bg-transparent text-base md:text-sm disabled:cursor-not-allowed"
     );
+
+    // Memoize the computed display value for currency format
+    const computeValue = React.useMemo(() => {
+      if (!currency) return value;
+
+      // Remove all non-numeric characters except for decimal points
+      let strValue = String(value);
+      const parsedValue = parseFloat(strValue.replace(/[^0-9.]/g, ""));
+      strValue = parsedValue.toLocaleString();
+
+      return !isNaN(parsedValue) ? `${currencySign}${strValue}` : "";
+    }, [value]);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+      if (!currency) return onChange && onChange(e);
+
+      // Remove non-numeric characters, preserving only numbers and decimals
+      let val = e.target.value.replace(/[^0-9.]/g, "");
+
+      // Remove any leading "$" symbols
+      if (val.charAt(0) === currencySign) val = val.substring(1);
+
+      // Remove commas from the value
+      val = val.split(",").join("");
+
+      // Trigger onChange with sanitized value
+      onChange?.({
+        target: { value: val, name },
+      } as React.ChangeEvent<HTMLInputElement>);
+    };
 
     return (
       <div>
@@ -67,6 +104,8 @@ const Input = React.forwardRef<HTMLInputElement, InputType>(
             type={type}
             className={inputStyles}
             ref={ref}
+            value={computeValue}
+            onChange={handleChange}
             {...props}
           />
 
