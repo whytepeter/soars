@@ -1,3 +1,9 @@
+import Heading from "../typography/Heading";
+
 export default function Preferences() {
-  return <div>Preferences</div>;
+  return (
+    <div>
+      <Heading>Preference</Heading>
+    </div>
+  );
 }

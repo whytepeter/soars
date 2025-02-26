@@ -36,6 +36,7 @@ export default function QuickTransfer({ className }: Props) {
       toast.success("Transfer was successful");
       setLoading(false);
       setAmount("");
+      setSelected(null);
     }, 3000);
   };
 
