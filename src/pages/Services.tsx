@@ -1,3 +1,9 @@
+import Heading from "@/components/typography/Heading";
+
 export default function Services() {
-  return <div>Services</div>;
+  return (
+    <main>
+      <Heading>Services</Heading>
+    </main>
+  );
 }

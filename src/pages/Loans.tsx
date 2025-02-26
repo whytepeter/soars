@@ -1,3 +1,9 @@
+import Heading from "@/components/typography/Heading";
+
 export default function Loans() {
-  return <div>Loans</div>;
+  return (
+    <main>
+      <Heading>Loans</Heading>
+    </main>
+  );
 }

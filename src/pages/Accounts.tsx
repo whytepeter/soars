@@ -1,3 +1,9 @@
+import Heading from "@/components/typography/Heading";
+
 export default function Accounts() {
-  return <div>Accounts</div>;
+  return (
+    <main>
+      <Heading>Account</Heading>
+    </main>
+  );
 }

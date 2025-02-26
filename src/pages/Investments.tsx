@@ -1,3 +1,9 @@
+import Heading from "@/components/typography/Heading";
+
 export default function Investments() {
-  return <div>Investments</div>;
+  return (
+    <main>
+      <Heading>Investment</Heading>
+    </main>
+  );
 }
