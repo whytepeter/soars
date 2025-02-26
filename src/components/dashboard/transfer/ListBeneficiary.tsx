@@ -17,14 +17,17 @@ import { useQuery } from "@/hooks/useQuery";
 import { getBeneficiary } from "@/lib/api/transaction";
 import { setTransactionState } from "@/store/slices/transactionSlice";
 
-export default function ListBeneficiary() {
+interface Props {
+  selected: UserDetails | null;
+  setSelected: (value: UserDetails) => void;
+}
+
+export default function ListBeneficiary({ selected, setSelected }: Props) {
   const dispatch = useAppDispatch();
 
   const beneficiaries = useAppSelector(
     (state) => state.transaction.beneficiaries
   );
-
-  const [selected, setSelected] = useState<UserDetails | null>(null);
 
   const { loading } = useQuery<UserDetails[]>(getBeneficiary, [], {
     onSuccess: (data) => {
