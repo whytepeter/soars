@@ -21,7 +21,6 @@ export default function QuickTransfer({ className }: Props) {
   const [loading, setLoading] = useState(false);
 
   const handleSend = () => {
-    console.log(+amount);
     if (!amount || +amount <= 0) {
       toast.error("Amount is required");
       return;
