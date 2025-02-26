@@ -10,7 +10,6 @@ import Beneficiary from "./Beneficiary";
 import Show from "@/components/base/Show";
 import BeneficiaryLoading from "./BeneficiaryLoading";
 
-import { useState } from "react";
 import { UserDetails } from "@/types";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { useQuery } from "@/hooks/useQuery";
