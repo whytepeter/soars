@@ -70,7 +70,7 @@ export default function AppNavbar({ className }: Props) {
           </div>
 
           <UserProfile
-            // onClick={() => navigate(ROUTES.Accounts)}
+            onClick={() => navigate(ROUTES.Settings)}
             className="w-12 h-12"
           />
         </div>
